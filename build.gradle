@@ -1,0 +1,28 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.asiacell'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+	implementation group: 'com.paypal.sdk' ,name:'checkout-sdk',version:'1.0.2'
+	implementation group: 'org.json',name:'json',version:'20180813'
+	implementation group: 'org.apache.commons' ,name:'commons-lang3',version:"3.6"
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

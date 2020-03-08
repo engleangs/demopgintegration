@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script src="jquery.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<div class="boxed-content full-width" id="cart"><div class="primary shopping-cart" role="main" style="border-top:1px solid #d4d2cf"><article><h1>Shopping Cart</h1><div class="cart-list boxed-content narrow-margin">
+    <table colspan="12">
+        <caption>Shopping Cart</caption><colgroup><col span="2" title="Items" class="col-items">
+        <col span="4" title="Details" class="col-details"><col span="2" title="Price" class="col-price">
+        <col span="1" title="Quantity" class="col-qty"><col span="3" title="Total" class="col-total">
+    </colgroup><thead class="show-for-medium"><tr><th class="cart-items" scope="col">Items</th>
+        <th class="cart-details" scope="col">Details</th><th class="cart-price" scope="col">Price</th>
+        <th class="cart-qty" scope="col">Quantity</th><th class="cart-total" scope="col">Total</th>
+    </tr></thead><tbody><tr><th class="cart-items" scope="row">
+        <img src="https://www.paypalobjects.com/web/res/d42/7d2f25538224ae65e8b97aa182934/img/platform/common/merchantStore/cart/camera-lg.jpg" alt="Black SLR Camera">
+        </th>
+        <td class="cart-details"><p>Lorem Ipsum proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem.</p><p>Item #: 123456789</p></td>
+        <td class="cart-price">$300</td><td class="cart-qty"><span>1</span></td><td class="cart-total">$300</td></tr></tbody></table>
+    <button class="btn btn-primary" id="btn-checkout"> Check out</button>
+    <div class="alert alert-primary" role="alert" id="success-alert" style="display: none;margin: 10px;width: 90%">
+        Successfully connect paypal ! <p id="success-msg"></p>
+    </div>
+    <div class="alert alert-danger" role="alert" id="error-alert" style="display: none;margin: 10px;width: 90%">
+        Error connecting to paypal <p id="error-msg"></p>
+    </div>
+
+</div>
+    <script>
+        $(document).ready(function () {
+            var data = JSON.stringify({
+                amount:300.0
+            });
+            $('#btn-checkout').click(function (e) {
+                $.ajax({
+                    type: 'POST',
+                    'processData': false,
+                    'contentType': 'application/json',
+                    url: "http://localhost:8080/",
+                    data: data ,
+                    dataType: 'json',
+                    success: function (e) {
+                        if( e.success) {
+                            $('#success-alert').show();
+                            $('#success-msg').html( "ORDER ID : "+ e.data.orderId);
+                        }
+                        else {
+                            $('#error-alert').show();
+                            $('#error-msg').html( e.message );
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
